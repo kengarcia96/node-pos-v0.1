@@ -6,19 +6,38 @@ module.exports = function main(inputs) {
     function printReceipt (){
         let summary = [];
         let count = 0;
-        let newItem = true;
+        let sum = 0;
 
         for (let i=0; i < inputs.length; i++){
-    
-            if(newItem === true){
-                summary.push({Barcode: inputs[i].Barcode, Name: inputs[i].Name, Unit: inputs[i].Unit, Price: inputs[i].Price, count: 1}); 
-                newItem = false;
+
+            let newItem = true;
+            for (let j=0; j < summary.length; j++){
+                if (inputs[i] == summary[j].Barcode){
+                    sum +=inputs[i].Price;
+                    summary[j].Price=sum;
+                    summary[j].count++;
+                    newEntry = false;
+                }
             }
 
-            else{
-                summary.push({Price: inputs[i].Price+=inputs[i].Price, count: count++}); 
-                newItem = false;
+            if(newItem === true){
+                sum +=inputs[i].Price;
+                summary.push({Barcode: inputs[i].Barcode, Name: inputs[i].Name, Unit: inputs[i].Unit, Price: sum, count: count++}); 
+                // newItem = false;
             }
+
+            // else{
+            //     sum +=inputs[i].Price;
+            //     summary.push({Barcode: inputs[i].Barcode, Name: inputs[i].Name, Unit: inputs[i].Unit, Price: sum, count: count++}); 
+            //     newItem = false;
+            // }
+
+            
+            // else{
+            //     sum +=inputs[i].Price;
+            //     summary.push({Price: sum, count: count++}); 
+            //     newItem = false;
+            // }
 
         }
 
